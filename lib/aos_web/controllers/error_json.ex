@@ -11,7 +11,11 @@ defmodule AosWeb.ErrorJSON do
     %{errors: Ecto.Changeset.traverse_errors(changeset, &translate_error/1)}
   end
 
-  def render(:"500.json", error) do
+  def render("404.json", error) do
+    %{message: error.reason.message}
+  end
+
+  def render("500.json", error) do
     error
   end
 end

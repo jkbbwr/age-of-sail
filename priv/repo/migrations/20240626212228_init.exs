@@ -23,6 +23,8 @@ defmodule Aos.Repo.Migrations.Init do
       timestamps()
     end
 
+    create unique_index(:auth_token, :token)
+
     create table(:item) do
       add :shortcode, :text, null: false
       add :name, :text, null: false

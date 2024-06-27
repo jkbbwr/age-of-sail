@@ -1,7 +1,6 @@
 defmodule AosWeb.PlayerController do
-  use AosWeb, :controller
+  use AosWeb.Controller
   alias Aos.Service.RegisterPlayer
-  action_fallback AosWeb.FallbackController
 
   def register(conn, body) do
     with {:ok, player} <- RegisterPlayer.call(body) do

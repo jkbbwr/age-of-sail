@@ -32,6 +32,7 @@ defmodule Aos.MixProject do
   # Type `mix help deps` for examples and options.
   defp deps do
     [
+      {:open_api_spex, "~> 3.4"},
       {:argon2_elixir, "~> 4.0"},
       {:phoenix, "~> 1.7.14"},
       {:phoenix_ecto, "~> 4.5"},

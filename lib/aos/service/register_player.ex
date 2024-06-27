@@ -1,7 +1,7 @@
 defmodule Aos.Service.RegisterPlayer do
   alias Aos.Repo.PlayerRepo
 
-  def call(attrs) do
-    PlayerRepo.create(attrs)
+  def call(payload) do
+    PlayerRepo.create(payload)
   end
 end

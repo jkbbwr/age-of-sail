@@ -7,7 +7,7 @@ defmodule Aos.Schema.Player do
     field :password_hash, :string
 
     # has_one :company, Aos.Schema.Company
-    # has_many :auth_tokens, Aos.Schema.AuthToken
+    has_many :auth_tokens, Aos.Schema.AuthToken
     timestamps()
   end
 
