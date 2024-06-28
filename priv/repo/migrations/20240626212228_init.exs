@@ -50,9 +50,13 @@ defmodule Aos.Repo.Migrations.Init do
     end
 
     create table(:route) do
-      add :source, references(:port), null: false
-      add :destination, references(:port), null: false
-      add :length, :integer, null: false
+      add :source_id, references(:port), null: false
+      add :destination_id, references(:port), null: false
+
+      add :length, :integer,
+        null: false,
+        comment: "The default time it takes to sail this route using the default ship"
+
       add :description, :text, null: false
       timestamps()
     end
