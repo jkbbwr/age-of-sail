@@ -17,6 +17,8 @@ defmodule Aos.Repo.Migrations.Init do
       timestamps()
     end
 
+    create unique_index(:company, :ticker)
+
     create table(:auth_token) do
       add :token, :text, null: false
       add :player_id, references(:player), null: false
@@ -44,6 +46,7 @@ defmodule Aos.Repo.Migrations.Init do
       add :type, :text, null: false
       add :cargo_space, :integer, null: false
       add :state, :text, null: false
+      add :owner_id, references(:company)
       add :port_id, references(:port)
       add :arriving_at, :timestamptz
       timestamps()
@@ -67,7 +70,7 @@ defmodule Aos.Repo.Migrations.Init do
       timestamps()
     end
 
-    create table(:stock) do
+    create table(:trader_inventory) do
       add :trader_id, references(:trader), null: false
       add :item_id, references(:item), null: false
       add :quantity, :integer, null: false
@@ -83,6 +86,16 @@ defmodule Aos.Repo.Migrations.Init do
       add :amount, :integer, null: false
       add :cost, :integer, null: false
       timestamps()
+    end
+
+    create table(:shipyard) do
+      add :port_id, references(:port), null: false
+      timestamps()
+    end
+
+    create table(:shipyard_stock) do
+      add :shipyard_id, references(:shipyard), null: false
+      add :ship_id, references(:ship), null: false
     end
 
     create table(:warehouse) do

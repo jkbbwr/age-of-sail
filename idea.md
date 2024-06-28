@@ -19,6 +19,8 @@ You run a trading company in the 1600s you start with some funds and you buy shi
 - Elements of chance
 - Crew customisation
 - Salvage
+- Taxes and customs
+- Limited port berths
 
 ## Timespan
 The game will last one real weeks per season and new features should release each season.

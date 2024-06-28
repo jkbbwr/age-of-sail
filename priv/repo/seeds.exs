@@ -12,7 +12,7 @@
 
 alias Aos.Repo.{PlayerRepo, PortRepo, RouteRepo}
 
-{:ok, player} = PlayerRepo.create(%{email: "dummy@dummy.com", password: "dummy123"})
+{:ok, player} = PlayerRepo.create(%{email: "demo@demo.com", password: "password"})
 
 {:ok, london} = PortRepo.create("London", "LOND")
 {:ok, port_of_spain} = PortRepo.create("Port of Spain", "PTOS")

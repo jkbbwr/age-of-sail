@@ -8,6 +8,7 @@ defmodule Aos.Schema.Player do
 
     # has_one :company, Aos.Schema.Company
     has_many :auth_tokens, Aos.Schema.AuthToken
+    has_one :company, Aos.Schema.Company
     timestamps()
   end
 
