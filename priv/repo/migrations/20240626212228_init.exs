@@ -20,6 +20,7 @@ defmodule Aos.Repo.Migrations.Init do
     create table(:auth_token) do
       add :token, :text, null: false
       add :player_id, references(:player), null: false
+      add :expires_at, :timestamptz, null: false
       timestamps()
     end
 

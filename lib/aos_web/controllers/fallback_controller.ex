@@ -12,4 +12,15 @@ defmodule AosWeb.FallbackController do
     |> put_view(AosWeb.ErrorJSON)
     |> render(:error, changeset: changeset)
   end
+
+  def call(conn, {:error, :invalid_password}) do
+    conn
+    |> put_status(:forbidden)
+    |> put_view(AosWeb.ErrorJSON)
+    |> render(:invalid_password)
+  end
+
+  def call(_conn, error) do
+    raise "fallback error not implemented for #{inspect(error)}"
+  end
 end

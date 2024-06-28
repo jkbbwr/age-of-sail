@@ -16,6 +16,7 @@ defmodule Aos.Schema.Player do
     |> cast(attrs, [:email, :password])
     |> validate_required([:email, :password])
     |> validate_format(:email, ~r/@/)
+    |> validate_length(:password, min: 8)
     |> unique_constraint([:email])
     |> hash_password()
   end

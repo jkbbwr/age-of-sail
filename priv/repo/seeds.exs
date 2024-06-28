@@ -9,3 +9,7 @@
 #
 # We recommend using the bang functions (`insert!`, `update!`
 # and so on) as they will fail if something goes wrong.
+
+alias Aos.Repo.{PlayerRepo, AuthTokenRepo}
+
+{:ok, player} = PlayerRepo.create(%{email: "dummy@dummy.com", password: "dummy123"})

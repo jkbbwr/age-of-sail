@@ -5,11 +5,22 @@ defmodule AosWeb.Router do
     plug :accepts, ["json"]
   end
 
+  pipeline :authenticated_api do
+    plug :accepts, ["json"]
+    plug AosWeb.Auth
+  end
+
   scope "/api", AosWeb do
     pipe_through :api
 
     post "/register", PlayerController, :register
-    post "/auth/login", AuthController, :login
+    post "/login", AuthController, :login
+  end
+
+  scope "/api", AosWeb do
+    pipe_through :authenticated_api
+
+    get "/me", PlayerController, :me
   end
 
   # Enable LiveDashboard and Swoosh mailbox preview in development
@@ -27,14 +38,5 @@ defmodule AosWeb.Router do
       live_dashboard "/dashboard", metrics: AosWeb.Telemetry
       forward "/mailbox", Plug.Swoosh.MailboxPreview
     end
-  end
-
-  def swagger_info do
-    %{
-      info: %{
-        version: "1.0",
-        title: "Age Of Sail"
-      }
-    }
   end
 end

@@ -11,11 +11,23 @@ defmodule AosWeb.ErrorJSON do
     %{errors: Ecto.Changeset.traverse_errors(changeset, &translate_error/1)}
   end
 
+  def invalid_password(_attrs) do
+    %{message: "invalid password"}
+  end
+
+  def expired_token(_attrs) do
+    %{message: "expired token"}
+  end
+
+  def invalid_auth(_attrs) do
+    %{message: "invalid auth"}
+  end
+
   def render("404.json", error) do
     %{message: error.reason.message}
   end
 
   def render("500.json", error) do
-    error
+    %{message: error.reason.message}
   end
 end
