@@ -41,6 +41,9 @@ defmodule Aos.Repo.Migrations.Init do
       timestamps()
     end
 
+    create unique_index(:port, :shortcode)
+    create unique_index(:port, :name)
+
     create table(:ship) do
       add :name, :text, null: false
       add :type, :text, null: false
@@ -110,5 +113,15 @@ defmodule Aos.Repo.Migrations.Init do
       add :warehouse_id, references(:warehouse), null: false
       timestamps()
     end
+
+    create table(:company_agent) do
+      add :company_id, references(:company), null: false
+      add :port_id, references(:port), null: false
+      timestamps()
+    end
+
+    create unique_index(:company_agent, [:company_id, :port_id],
+             comment: "companies can only have one agent in each port"
+           )
   end
 end

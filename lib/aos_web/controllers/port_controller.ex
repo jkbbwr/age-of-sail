@@ -1,10 +1,7 @@
-defmodule AosWeb.Controller.PortController do
+defmodule AosWeb.PortController do
   use AosWeb.Controller
-  alias Aos.Repo.PortRepo
 
-  def get(conn, %{"name" => name}) do
-  end
-
-  def get(conn, %{"id" => id}) do
+  def get(conn, _attrs) do
+    conn
   end
 end

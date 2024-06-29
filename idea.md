@@ -10,6 +10,8 @@ You run a trading company in the 1600s you start with some funds and you buy shi
 - Food/provisions
 - Risk
 - Insurance market
+- Gossip system
+- Agents to represent the players company
 - Stock market
 - Pirates
 - Supply and demand

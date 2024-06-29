@@ -6,6 +6,7 @@ defmodule Aos.Schema.Company do
     field :name, :string
     belongs_to :player, Aos.Schema.Player
     has_many :ships, Aos.Schema.Ship
+    has_many :agents, Aos.Schema.CompanyAgent
     timestamps()
   end
 

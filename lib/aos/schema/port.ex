@@ -10,6 +10,7 @@ defmodule Aos.Schema.Port do
       join_keys: [source_id: :id, destination_id: :id]
 
     has_many :ships, Aos.Schema.Ship
+    has_many :agents, Aos.Schema.CompanyAgent
 
     timestamps()
   end
@@ -19,5 +20,8 @@ defmodule Aos.Schema.Port do
     |> cast(attrs, [:name, :shortcode])
     |> validate_required([:name, :shortcode])
     |> validate_length(:shortcode, is: 4)
+    |> unique_constraint(:shortcode)
+    |> unique_constraint(:name)
+    |> update_change(:shortcode, &String.downcase/1)
   end
 end

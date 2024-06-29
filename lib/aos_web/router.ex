@@ -21,6 +21,7 @@ defmodule AosWeb.Router do
     pipe_through :authenticated_api
 
     get "/me", PlayerController, :me
+    post "/agent/hire", CompanyAgentController, :hire
   end
 
   # Enable LiveDashboard and Swoosh mailbox preview in development

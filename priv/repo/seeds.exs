@@ -10,9 +10,10 @@
 # We recommend using the bang functions (`insert!`, `update!`
 # and so on) as they will fail if something goes wrong.
 
-alias Aos.Repo.{PlayerRepo, PortRepo, RouteRepo}
+alias Aos.Repo.{CompanyRepo, PlayerRepo, PortRepo, RouteRepo}
 
 {:ok, player} = PlayerRepo.create(%{email: "demo@demo.com", password: "password"})
+{:ok, company} = Aos.Repo.CompanyRepo.create("test", "test company", player)
 
 {:ok, london} = PortRepo.create("London", "LOND")
 {:ok, port_of_spain} = PortRepo.create("Port of Spain", "PTOS")
@@ -30,7 +31,6 @@ alias Aos.Repo.{PlayerRepo, PortRepo, RouteRepo}
 {:ok, san_juan} = PortRepo.create("San Juan", "SJUN")
 {:ok, santo_domingo} = PortRepo.create("Santo Domingo", "SNDM")
 {:ok, port_royal} = PortRepo.create("Port Royal", "PRYL")
-{:ok, port_of_spain} = PortRepo.create("Port of Spain", "PTOS")
 
 {:ok, london_to_port_of_spain} =
   RouteRepo.create(london, port_of_spain, "London -> Port of Spain", 1)
