@@ -46,7 +46,9 @@ defmodule Aos.MixProject do
       {:jason, "~> 1.2"},
       {:dns_cluster, "~> 0.1.1"},
       {:bandit, "~> 1.5"},
+      {:random_password, "~> 1.2", only: :test},
       {:mimic, "~> 1.8", only: :test},
+      {:faker, "~> 0.18.0", only: :test},
       {:credo, "~> 1.7", only: :dev}
     ]
   end

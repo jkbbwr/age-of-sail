@@ -28,6 +28,16 @@ defmodule AosWeb.ConnCase do
       import Plug.Conn
       import Phoenix.ConnTest
       import AosWeb.ConnCase
+
+      def json_conn() do
+        build_conn()
+        |> put_req_header("accept", "application/json")
+      end
+
+      def authenticated_json_conn(token) do
+        json_conn()
+        |> put_req_header("authorization", "Bearer #{token}")
+      end
     end
   end
 

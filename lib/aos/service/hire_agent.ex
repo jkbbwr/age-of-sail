@@ -29,7 +29,7 @@ defmodule Aos.Service.HireAgent do
     if company.player_id == player.id do
       true
     else
-      {:error, :unauthorized}
+      {:error, :company_not_owned_by_player}
     end
   end
 

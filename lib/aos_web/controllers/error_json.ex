@@ -15,6 +15,14 @@ defmodule AosWeb.ErrorJSON do
     %{message: "invalid password"}
   end
 
+  def unauthorized(_attrs) do
+    %{message: "unauthorised"}
+  end
+
+  def forbidden(_attrs) do
+    %{message: "forbidden"}
+  end
+
   def expired_token(_attrs) do
     %{message: "expired token"}
   end

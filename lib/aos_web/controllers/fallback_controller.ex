@@ -13,6 +13,20 @@ defmodule AosWeb.FallbackController do
     |> render(:error, changeset: changeset)
   end
 
+  def call(conn, {:error, :unauthorized}) do
+    conn
+    |> put_status(:unauthorized)
+    |> put_view(AosWeb.ErrorJSON)
+    |> render(:unauthorized)
+  end
+
+  def call(conn, {:error, :forbidden}) do
+    conn
+    |> put_status(:forbidden)
+    |> put_view(AosWeb.ErrorJSON)
+    |> render(:forbidden)
+  end
+
   def call(conn, {:error, :invalid_password}) do
     conn
     |> put_status(:forbidden)

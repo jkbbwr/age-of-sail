@@ -6,7 +6,6 @@ defmodule Aos.Schema.Player do
     field :password, :string, virtual: true, redact: true
     field :password_hash, :string
 
-    # has_one :company, Aos.Schema.Company
     has_many :auth_tokens, Aos.Schema.AuthToken
     has_one :company, Aos.Schema.Company
     timestamps()
