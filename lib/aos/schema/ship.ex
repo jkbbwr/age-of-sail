@@ -5,7 +5,7 @@ defmodule Aos.Schema.Ship do
     field :name, :string
     field :type, Ecto.Enum, values: [:sloop, :brig, :frigate, :galleon, :ship_of_the_line]
     field :cargo_space, :integer
-    field :state, Ecto.Enum, values: [:in_port, :at_sea, :destroyed]
+    field :state, Ecto.Enum, values: [:at_port, :at_sea, :destroyed]
     field :speed, :integer
     belongs_to :port, Aos.Schema.Port
     belongs_to :company, Aos.Schema.Company

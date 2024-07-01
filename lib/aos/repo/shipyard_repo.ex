@@ -24,6 +24,24 @@ defmodule Aos.Repo.ShipyardRepo do
     end
   end
 
+  def find_stock_by_ship_id(yard, ship_id, opts \\ []) do
+    preload = Keyword.get(opts, :preload, [])
+
+    query =
+      from stock in ShipyardStock,
+        join: shipyard in assoc(stock, :shipyard),
+        on: shipyard.id == ^yard.id,
+        join: ship in assoc(stock, :ship),
+        on: ship.id == ^ship_id,
+        preload: ^preload,
+        select: stock
+
+    case Repo.one(query) do
+      nil -> {:error, :not_found}
+      stock -> {:ok, stock}
+    end
+  end
+
   def all(params \\ %{}) do
     query =
       from yard in Shipyard,
@@ -34,5 +52,9 @@ defmodule Aos.Repo.ShipyardRepo do
         select: yard
 
     {:ok, Repo.paginate(query, params)}
+  end
+
+  def transfer_ship_to_company(_stock, _company) do
+    raise "Not implemented yet"
   end
 end

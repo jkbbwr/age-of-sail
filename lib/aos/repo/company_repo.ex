@@ -30,8 +30,10 @@ defmodule Aos.Repo.CompanyRepo do
     end
   end
 
-  def find_by_id(id) do
-    case(Repo.get(Company, id)) do
+  def find_by_id(id, opts \\ []) do
+    preload = Keyword.get(opts, :preload, [])
+
+    case Repo.get(Company, id) |> Repo.preload(preload) do
       nil -> {:error, :not_found}
       company -> {:ok, company}
     end

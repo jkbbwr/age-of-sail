@@ -31,6 +31,10 @@ defmodule AosWeb.ErrorJSON do
     %{message: "invalid auth"}
   end
 
+  def render("400.json", error) do
+    %{message: error.reason.message}
+  end
+
   def render("404.json", error) do
     %{message: error.reason.message}
   end

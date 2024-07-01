@@ -23,11 +23,14 @@ defmodule AosWeb.Router do
     pipe_through :authenticated_api
 
     get "/player/me", PlayerController, :me
+
     get "/shipyard", ShipyardController, :all
-    get "/shipyard/:id", ShipyardController, :get
+    get "/shipyard/:shipyard_id", ShipyardController, :get
+    post "/shipyard/:shipyard_id/buy", ShipyardController, :buy
+
+    post "/company/register", CompanyController, :register
 
     post "/agent/hire", CompanyAgentController, :hire
-    post "/company/register", CompanyController, :register
   end
 
   # Enable LiveDashboard and Swoosh mailbox preview in development

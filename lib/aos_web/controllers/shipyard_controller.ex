@@ -1,9 +1,10 @@
 defmodule AosWeb.ShipyardController do
   use AosWeb.Controller
   alias Aos.Repo.ShipyardRepo
+  alias Aos.Service.BuyShip
 
-  def get(conn, %{shipyard_id: shipyard_id}) do
-    with {:ok, shipyard} <- ShipyardRepo.find_by_id(shipyard_id) do
+  def get(conn, %{"shipyard_id" => shipyard_id}) do
+    with {:ok, shipyard} <- ShipyardRepo.find_by_id(shipyard_id, preload: [ships: :ship]) do
       render(conn, :get, shipyard: shipyard)
     end
   end
@@ -16,6 +17,13 @@ defmodule AosWeb.ShipyardController do
              preload: [:port, ships: :ship]
            ) do
       render(conn, :all, page: page)
+    end
+  end
+
+  def buy(conn, params) do
+    with {:ok, ship} <- BuyShip.call(conn.assigns.player, params) do
+      conn
+      |> put_status(:accepted)
     end
   end
 end

@@ -1,6 +1,7 @@
 defmodule AosWeb.ShipJSON do
   import AosWeb.JsonViewHelpers
   alias AosWeb.PortJSON
+  alias AosWeb.CompanyJSON
 
   def render("ship.json", %{ship: ship}) do
     %{
@@ -15,10 +16,10 @@ defmodule AosWeb.ShipJSON do
       type: ship.type,
       cargo_space: ship.cargo_space,
       speed: ship.speed,
-      owner: ship.owner,
       arriving_at: ship.arriving_at
     }
     |> map_assoc_if_loaded(ship.port, :port, &PortJSON.port/1)
+    |> map_assoc_if_loaded(ship.company, :company, &CompanyJSON.company/1)
   end
 
   def ships(ships) do

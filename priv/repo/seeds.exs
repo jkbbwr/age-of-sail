@@ -33,7 +33,7 @@ alias Aos.Repo.{
 {:ok, london} = PortRepo.create("London", "LOND")
 {:ok, london_shipyard} = ShipyardRepo.create(london)
 
-{:ok, demo_ship} = ShipRepo.create("Demo Ship 1", :sloop, 100, 100, :in_port, nil, london, nil)
+{:ok, demo_ship} = ShipRepo.create("Demo Ship 1", :sloop, 100, 100, :at_port, nil, london, nil)
 {:ok, _shipyard_stock} = ShipyardRepo.create_stock(100, demo_ship, london_shipyard)
 
 {:ok, port_of_spain} = PortRepo.create("Port of Spain", "PTOS")

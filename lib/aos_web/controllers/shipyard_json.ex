@@ -18,9 +18,9 @@ defmodule AosWeb.ShipyardJSON do
 
   def shipyard(shipyard) do
     %{
-      id: shipyard.id,
-      port: PortJSON.port(shipyard.port)
+      id: shipyard.id
     }
+    |> map_assoc_if_loaded(shipyard.port, :port, &PortJSON.port/1)
     |> map_assoc_if_loaded(shipyard.ships, :ships, &stocks/1)
   end
 
