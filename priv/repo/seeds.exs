@@ -10,12 +10,33 @@
 # We recommend using the bang functions (`insert!`, `update!`
 # and so on) as they will fail if something goes wrong.
 
-alias Aos.Repo.{CompanyRepo, PlayerRepo, PortRepo, RouteRepo}
+alias Aos.Repo.{
+  CompanyRepo,
+  PlayerRepo,
+  PortRepo,
+  RouteRepo,
+  ShipyardRepo,
+  ShipyardEntryRepo,
+  ShipRepo,
+  AuthTokenRepo
+}
 
 {:ok, player} = PlayerRepo.create(%{email: "demo@demo.com", password: "password"})
 {:ok, company} = Aos.Repo.CompanyRepo.create("test", "test company", player)
 
+{:ok, auth} =
+  Aos.Repo.AuthTokenRepo.create(
+    player,
+    "auth",
+    DateTime.now!("Etc/UTC") |> DateTime.add(30, :day) |> DateTime.truncate(:second)
+  )
+
 {:ok, london} = PortRepo.create("London", "LOND")
+{:ok, london_shipyard} = ShipyardRepo.create(london)
+
+{:ok, demo_ship} = ShipRepo.create("Demo Ship 1", :sloop, 100, 100, :in_port, nil, london, nil)
+{:ok, entry} = ShipyardRepo.create_stock(100, demo_ship, london_shipyard)
+
 {:ok, port_of_spain} = PortRepo.create("Port of Spain", "PTOS")
 {:ok, amsterdam} = PortRepo.create("Amsterdam", "AMST")
 {:ok, lisbon} = PortRepo.create("Lisbon", "LISB")

@@ -29,3 +29,4 @@ use AliasHack
 {:ok, player} = PlayerRepo.find_by_email("demo@demo.com")
 {:ok, company} = CompanyRepo.find_by_ticker("test")
 {:ok, london} = PortRepo.find_by_shortcode("lond")
+london = Repo.preload(london, shipyard: :ships)

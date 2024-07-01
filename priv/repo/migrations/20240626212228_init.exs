@@ -18,6 +18,7 @@ defmodule Aos.Repo.Migrations.Init do
     end
 
     create unique_index(:company, :ticker)
+    create unique_index(:company, :player_id)
 
     create table(:auth_token) do
       add :token, :text, null: false
@@ -49,6 +50,7 @@ defmodule Aos.Repo.Migrations.Init do
       add :type, :text, null: false
       add :cargo_space, :integer, null: false
       add :state, :text, null: false
+      add :speed, :integer, null: false
       add :owner_id, references(:company)
       add :port_id, references(:port)
       add :arriving_at, :timestamptz
@@ -61,7 +63,7 @@ defmodule Aos.Repo.Migrations.Init do
 
       add :length, :integer,
         null: false,
-        comment: "The default time it takes to sail this route using the default ship"
+        comment: "the number of days it takes to sail this route before modifiers"
 
       add :description, :text, null: false
       timestamps()
@@ -99,6 +101,8 @@ defmodule Aos.Repo.Migrations.Init do
     create table(:shipyard_stock) do
       add :shipyard_id, references(:shipyard), null: false
       add :ship_id, references(:ship), null: false
+      add :cost, :integer, null: false
+      timestamps()
     end
 
     create table(:warehouse) do

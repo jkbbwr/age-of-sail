@@ -6,6 +6,7 @@ defmodule Aos.Schema.Ship do
     field :type, Ecto.Enum, values: [:sloop, :brig, :frigate, :galleon, :ship_of_the_line]
     field :cargo_space, :integer
     field :state, Ecto.Enum, values: [:in_port, :at_sea, :destroyed]
+    field :speed, :integer
     belongs_to :port, Aos.Schema.Port
     belongs_to :owner, Aos.Schema.Company
     field :arriving_at, :utc_datetime
@@ -14,9 +15,9 @@ defmodule Aos.Schema.Ship do
 
   def changeset(ship, attrs \\ %{}) do
     ship
-    |> cast(attrs, [:name, :type, :cargo_space, :state, :arriving_at])
+    |> cast(attrs, [:name, :type, :cargo_space, :state, :arriving_at, :speed])
     |> put_assoc(:port, attrs.port)
     |> put_assoc(:owner, attrs.owner)
-    |> validate_required([:name, :type, :cargo_space, :state, :port])
+    |> validate_required([:name, :type, :cargo_space, :state, :port, :speed])
   end
 end

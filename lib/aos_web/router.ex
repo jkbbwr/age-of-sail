@@ -21,6 +21,8 @@ defmodule AosWeb.Router do
     pipe_through :authenticated_api
 
     get "/me", PlayerController, :me
+    get "/shipyard", ShipyardController, :all
+    get "/shipyard/:id", ShipyardController, :get
     post "/agent/hire", CompanyAgentController, :hire
   end
 

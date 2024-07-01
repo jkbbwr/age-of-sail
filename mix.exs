@@ -33,6 +33,7 @@ defmodule Aos.MixProject do
   defp deps do
     [
       {:open_api_spex, "~> 3.4"},
+      {:scrivener_ecto, "~> 2.0"},
       {:argon2_elixir, "~> 4.0"},
       {:phoenix, "~> 1.7.14"},
       {:phoenix_ecto, "~> 4.5"},

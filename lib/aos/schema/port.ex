@@ -10,6 +10,7 @@ defmodule Aos.Schema.Port do
       join_keys: [source_id: :id, destination_id: :id]
 
     has_many :ships, Aos.Schema.Ship
+    has_one :shipyard, Aos.Schema.Shipyard
     has_many :agents, Aos.Schema.CompanyAgent
 
     timestamps()

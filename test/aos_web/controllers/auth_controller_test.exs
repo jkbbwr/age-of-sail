@@ -9,7 +9,7 @@ defmodule AosWeb.AuthControllerTest do
       conn =
         post(build_conn(), ~p"/api/login", %{email: "test@test.com", password: "password"})
 
-      assert json_response(conn, 200)["player_id"] == player.id
+      assert json_response(conn, 200)["data"]["player_id"] == player.id
     end
   end
 
