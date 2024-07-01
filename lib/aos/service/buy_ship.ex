@@ -7,7 +7,7 @@ defmodule Aos.Service.BuyShip do
     field :company_id, Ecto.UUID
   end
 
-  defp validate(payload) do
+  def validate(payload) do
     changeset =
       %__MODULE__{}
       |> cast(payload, [:port_id, :company_id])
@@ -20,6 +20,6 @@ defmodule Aos.Service.BuyShip do
     end
   end
 
-  def call(payload) do
+  def call(_payload) do
   end
 end

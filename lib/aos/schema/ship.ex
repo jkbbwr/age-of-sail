@@ -8,7 +8,7 @@ defmodule Aos.Schema.Ship do
     field :state, Ecto.Enum, values: [:in_port, :at_sea, :destroyed]
     field :speed, :integer
     belongs_to :port, Aos.Schema.Port
-    belongs_to :owner, Aos.Schema.Company
+    belongs_to :company, Aos.Schema.Company
     field :arriving_at, :utc_datetime
     timestamps()
   end
@@ -17,7 +17,7 @@ defmodule Aos.Schema.Ship do
     ship
     |> cast(attrs, [:name, :type, :cargo_space, :state, :arriving_at, :speed])
     |> put_assoc(:port, attrs.port)
-    |> put_assoc(:owner, attrs.owner)
+    |> put_assoc(:company, attrs.company)
     |> validate_required([:name, :type, :cargo_space, :state, :port, :speed])
   end
 end

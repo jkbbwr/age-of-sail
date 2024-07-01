@@ -4,7 +4,7 @@ defmodule AosWeb.ShipyardController do
 
   def get(conn, %{shipyard_id: shipyard_id}) do
     with {:ok, shipyard} <- ShipyardRepo.find_by_id(shipyard_id) do
-      render(conn, "shipyard.json", shipyard: shipyard)
+      render(conn, :get, shipyard: shipyard)
     end
   end
 
@@ -13,9 +13,9 @@ defmodule AosWeb.ShipyardController do
            ShipyardRepo.all(
              page: attrs[:page],
              page_size: attrs[:page_size],
-             preload: [:port, :ships]
+             preload: [:port, ships: :ship]
            ) do
-      render(conn, "shipyards.json", page: page)
+      render(conn, :all, page: page)
     end
   end
 end

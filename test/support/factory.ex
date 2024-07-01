@@ -4,7 +4,7 @@ defmodule AosWeb.Factory do
   use RandomPassword
 
   def build(:player) do
-    %Player{email: Faker.Internet.email(), password_hash: Argon2.hash_pwd_salt(generate())}
+    %Player{name: Faker.Person.first_name(), email: Faker.Internet.email(), password_hash: Argon2.hash_pwd_salt(generate())}
   end
 
   def build(:company) do

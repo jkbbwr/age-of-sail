@@ -1,26 +1,19 @@
 defmodule AosWeb.ShipyardJSON do
   alias AosWeb.ShipJSON
   alias AosWeb.PortJSON
+  import AosWeb.JsonViewHelpers
 
-  def render("shipyard.json", attrs) do
+  def get(%{shipyard: shipyard}) do
     %{
-      data: shipyard_with_stock(attrs)
+      data: shipyard(shipyard)
     }
   end
 
-  def render("shipyards.json", %{page: page}) do
+  def all(%{page: page}) do
     %{
       data: for(yard <- page.entries, do: shipyard(yard)),
-      meta: %{
-        page_number: page.page_number,
-        page_size: page.page_size,
-        total_entries: page.total_entries,
-        total_pages: page.total_pages
-      }
+      meta: page_meta(page)
     }
-  end
-
-  def shipyard_with_stock(shipyard) do
   end
 
   def shipyard(shipyard) do
@@ -28,5 +21,18 @@ defmodule AosWeb.ShipyardJSON do
       id: shipyard.id,
       port: PortJSON.port(shipyard.port)
     }
+    |> map_assoc_if_loaded(shipyard.ships, :ships, &stocks/1)
+  end
+
+  def stock(stock) do
+    %{
+      id: stock.id,
+      cost: stock.cost
+    }
+    |> map_assoc_if_loaded(stock.ship, :ship, &ShipJSON.ship/1)
+  end
+
+  def stocks(stocks) do
+    for stock <- stocks, do: stock(stock)
   end
 end

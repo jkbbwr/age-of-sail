@@ -2,12 +2,32 @@ defmodule Aos.Repo.CompanyRepo do
   use Aos, :repository
   alias Aos.Schema.Company
 
-  @spec create(String.t(), String.t(), Aos.Schema.Player.t()) ::
-          {:ok, Company.t()} | {:error, Ecto.Changeset.t()}
-  def create(ticker, name, player) do
-    %Company{}
-    |> Company.changeset(%{ticker: ticker, name: name, player: player})
-    |> Repo.insert()
+  def create(ticker, name, treasury, player) do
+    company =
+      %Company{}
+      |> Company.changeset(%{ticker: ticker, name: name, treasury: treasury, player: player})
+      |> Repo.insert()
+
+    case company do
+      {:ok, company} -> {:ok, Repo.preload(company, [:agents, :ships])}
+      error -> error
+    end
+  end
+
+  def all(params \\ %{}) do
+    query =
+      from company in Company,
+        preload: [:player],
+        select: company
+
+    Repo.paginate(query, params)
+  end
+
+  def find_company_by_player_id(player_id) do
+    case(Repo.get_by(Company, player_id: player_id)) do
+      nil -> {:error, :not_found}
+      company -> {:ok, company}
+    end
   end
 
   def find_by_id(id) do

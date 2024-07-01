@@ -4,15 +4,18 @@ defmodule Aos.Repo.Migrations.Init do
   def change do
     create table(:player) do
       add :email, :text, null: false
+      add :name, :text, null: false
       add :password_hash, :text, null: false
       timestamps()
     end
 
     create unique_index(:player, :email)
+    create unique_index(:player, :name)
 
     create table(:company) do
       add :ticker, :text, null: false
       add :name, :text, null: false
+      add :treasury, :integer, null: false
       add :player_id, references(:player), null: false
       timestamps()
     end
@@ -51,7 +54,7 @@ defmodule Aos.Repo.Migrations.Init do
       add :cargo_space, :integer, null: false
       add :state, :text, null: false
       add :speed, :integer, null: false
-      add :owner_id, references(:company)
+      add :company_id, references(:company)
       add :port_id, references(:port)
       add :arriving_at, :timestamptz
       timestamps()

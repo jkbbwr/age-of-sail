@@ -4,12 +4,12 @@ defmodule AosWeb.PlayerControllerTest do
 
   test "register new account" do
     conn =
-      post(build_conn(), ~p"/api/register", %{
+      post(build_conn(), ~p"/api/player/register", %{
         email: "example@example.com",
         password: "password"
       })
 
-    assert json_response(conn, 200)["email"] == "example@example.com"
+    assert json_response(conn, 200)["data"]["email"] == "example@example.com"
   end
 
   describe "registration error cases" do
@@ -18,7 +18,7 @@ defmodule AosWeb.PlayerControllerTest do
       {:ok, _} = RegisterPlayer.call(%{email: "example@example.com", password: "password"})
 
       conn =
-        post(build_conn(), ~p"/api/register", %{
+        post(build_conn(), ~p"/api/player/register", %{
           email: "example@example.com",
           password: "password"
         })
@@ -28,7 +28,7 @@ defmodule AosWeb.PlayerControllerTest do
 
     test "password not strong enough" do
       conn =
-        post(build_conn(), ~p"/api/register", %{
+        post(build_conn(), ~p"/api/player/register", %{
           email: "example@example.com",
           password: "123"
         })

@@ -2,10 +2,10 @@ defmodule Aos.Schema.Player do
   use Aos.Schema
 
   schema "player" do
+    field :name, :string
     field :email, :string
     field :password, :string, virtual: true, redact: true
-    field :password_hash, :string
-
+    field :password_hash, :string, redact: true
     has_many :auth_tokens, Aos.Schema.AuthToken
     has_one :company, Aos.Schema.Company
     timestamps()
@@ -13,11 +13,12 @@ defmodule Aos.Schema.Player do
 
   def changeset(player, attrs \\ %{}) do
     player
-    |> cast(attrs, [:email, :password])
-    |> validate_required([:email, :password])
+    |> cast(attrs, [:email, :password, :name])
+    |> validate_required([:email, :password, :name])
     |> validate_format(:email, ~r/@/)
     |> validate_length(:password, min: 8)
-    |> unique_constraint([:email])
+    |> unique_constraint(:email)
+    |> unique_constraint(:name)
     |> hash_password()
   end
 

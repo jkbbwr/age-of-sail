@@ -24,16 +24,15 @@ defmodule Aos.Repo.ShipyardRepo do
     end
   end
 
-  def all(opts \\ []) do
-    page = Keyword.get(opts, :page, 1)
-    page_size = Keyword.get(opts, :page_size, 10)
-    preload = Keyword.get(opts, :preload, [])
-
-    all =
+  def all(params \\ %{}) do
+    query =
       from yard in Shipyard,
-        preload: ^preload,
+        join: p in assoc(yard, :port),
+        join: s in assoc(yard, :ships),
+        join: e in assoc(s, :ship),
+        preload: [ships: {s, ship: e}, port: p],
         select: yard
 
-    {:ok, all |> Repo.paginate(%{page: page, page_size: page_size})}
+    {:ok, Repo.paginate(query, params)}
   end
 end

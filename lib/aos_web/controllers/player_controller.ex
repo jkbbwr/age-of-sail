@@ -4,11 +4,13 @@ defmodule AosWeb.PlayerController do
 
   def register(conn, body) do
     with {:ok, player} <- RegisterPlayer.call(body) do
-      render(conn, "player.json", player: player)
+      conn
+      |> put_status(:created)
+      |> render("register.json", player: player)
     end
   end
 
   def me(conn, _body) do
-    render(conn, "player.json", player: conn.assigns.player)
+    render(conn, "me.json", player: conn.assigns.player)
   end
 end
