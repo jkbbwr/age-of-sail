@@ -1,25 +1,28 @@
 defmodule AosWeb.PlayerControllerTest do
   use AosWeb.ConnCase, async: true
   alias Aos.Service.RegisterPlayer
+  import AosWeb.Factory
 
   test "register new account" do
     conn =
       post(build_conn(), ~p"/api/player/register", %{
         email: "example@example.com",
+        name: "Bob",
         password: "password"
       })
 
-    assert json_response(conn, 200)["data"]["email"] == "example@example.com"
+    assert json_response(conn, 201)["data"]["name"] == "Bob"
   end
 
   describe "registration error cases" do
     test "user already exists" do
       # Create a user.
-      {:ok, _} = RegisterPlayer.call(%{email: "example@example.com", password: "password"})
+      player = insert!(:player)
 
       conn =
         post(build_conn(), ~p"/api/player/register", %{
-          email: "example@example.com",
+          email: player.email,
+          name: "fucking bob",
           password: "password"
         })
 
@@ -30,6 +33,7 @@ defmodule AosWeb.PlayerControllerTest do
       conn =
         post(build_conn(), ~p"/api/player/register", %{
           email: "example@example.com",
+          name: "bob",
           password: "123"
         })
 

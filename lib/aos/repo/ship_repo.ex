@@ -4,16 +4,22 @@ defmodule Aos.Repo.ShipRepo do
 
   def create(name, type, cargo_space, speed, state, arriving_at, port, company) do
     %Ship{}
-    |> Ship.changeset(%{
+    |> Ship.create_changeset(%{
       name: name,
       type: type,
       cargo_space: cargo_space,
       speed: speed,
-      state: state,
-      arriving_at: arriving_at,
       port: port,
-      company: company
+      company: company,
+      state: state,
+      arriving_at: arriving_at
     })
     |> Repo.insert()
+  end
+
+  def update_company(ship, company) do
+    ship
+    |> Ship.update_company_changeset(%{company: company})
+    |> Repo.update()
   end
 end

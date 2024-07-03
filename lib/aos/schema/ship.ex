@@ -13,11 +13,25 @@ defmodule Aos.Schema.Ship do
     timestamps()
   end
 
-  def changeset(ship, attrs \\ %{}) do
+  def update_company_changeset(ship, %{company: company} = attrs) do
+    ship
+    |> cast(attrs, [])
+    |> put_assoc(:company, company)
+    |> validate_required([:company])
+  end
+
+  def update_port_changeset(ship, %{port: port} = attrs) do
+    ship
+    |> cast(attrs, [])
+    |> put_assoc(:port, port)
+    |> validate_required([:port])
+  end
+
+  def create_changeset(ship, attrs \\ %{}) do
     ship
     |> cast(attrs, [:name, :type, :cargo_space, :state, :arriving_at, :speed])
-    |> put_assoc(:port, attrs.port)
     |> put_assoc(:company, attrs.company)
+    |> put_assoc(:port, attrs.port)
     |> validate_required([:name, :type, :cargo_space, :state, :port, :speed])
   end
 end

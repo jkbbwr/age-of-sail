@@ -5,7 +5,12 @@ defmodule Aos.Repo.CompanyRepo do
   def create(ticker, name, treasury, player) do
     company =
       %Company{}
-      |> Company.changeset(%{ticker: ticker, name: name, treasury: treasury, player: player})
+      |> Company.create_changeset(%{
+        ticker: ticker,
+        name: name,
+        treasury: treasury,
+        player: player
+      })
       |> Repo.insert()
 
     case company do
@@ -44,5 +49,10 @@ defmodule Aos.Repo.CompanyRepo do
       nil -> {:error, :not_found}
       company -> {:ok, company}
     end
+  end
+
+  def debit(company, amount) do
+    Company.update_treasury_changeset(company, %{treasury: company.treasury - amount})
+    |> Repo.update()
   end
 end

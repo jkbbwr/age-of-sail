@@ -31,6 +31,8 @@ defmodule AosWeb.Router do
     post "/company/register", CompanyController, :register
 
     post "/agent/hire", CompanyAgentController, :hire
+
+    get "/event", EventWebsocketUpgrade, AosWeb.EventWebsocket
   end
 
   # Enable LiveDashboard and Swoosh mailbox preview in development

@@ -16,6 +16,12 @@ defmodule AosWeb.ShipyardJSON do
     }
   end
 
+  def buy(%{ship: ship}) do
+    %{
+      data: ShipJSON.ship(ship)
+    }
+  end
+
   def shipyard(shipyard) do
     %{
       id: shipyard.id

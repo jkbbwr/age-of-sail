@@ -24,6 +24,7 @@ defmodule AosWeb.ShipyardController do
     with {:ok, ship} <- BuyShip.call(conn.assigns.player, params) do
       conn
       |> put_status(:accepted)
+      |> render(:buy, ship: ship)
     end
   end
 end

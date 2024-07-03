@@ -90,8 +90,13 @@ defmodule AosWeb.NewPlayerTest do
         authenticated_json_conn(auth.token)
         |> post(~p"/api/shipyard/#{london_shipyard.id}/buy", %{
           ship_id: ship.id,
-          agent_id: agent.id
+          port_id: london.id,
+          shipyard_id: london_shipyard.id,
+          agent_id: agent.id,
+          company_id: company.id
         })
+
+      assert response = json_response(conn, 202)
     end
   end
 end

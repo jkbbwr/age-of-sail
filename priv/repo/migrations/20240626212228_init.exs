@@ -20,6 +20,11 @@ defmodule Aos.Repo.Migrations.Init do
       timestamps()
     end
 
+    create constraint(:company, :treasury,
+             check: "treasury >= 0",
+             comment: "ensure treasury can never drop under 0"
+           )
+
     create unique_index(:company, :ticker)
     create unique_index(:company, :player_id)
 

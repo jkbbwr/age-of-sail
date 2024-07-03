@@ -54,7 +54,8 @@ defmodule Aos.Repo.ShipyardRepo do
     {:ok, Repo.paginate(query, params)}
   end
 
-  def transfer_ship_to_company(_stock, _company) do
-    raise "Not implemented yet"
+  def remove_stock(stock) do
+    stock
+    |> Repo.delete()
   end
 end
