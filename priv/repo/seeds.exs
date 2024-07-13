@@ -17,8 +17,11 @@ alias Aos.Repo.{
   ShipyardRepo,
   ShipRepo,
   AuthTokenRepo,
-  CompanyRepo
+  CompanyRepo,
+  ItemRepo
 }
+
+### Players
 
 {:ok, player} = PlayerRepo.create(%{name: "demo", email: "demo@demo.com", password: "password"})
 # {:ok, _company} = CompanyRepo.create("test", "test company", 9999, player)
@@ -29,6 +32,8 @@ alias Aos.Repo.{
     "auth",
     DateTime.now!("Etc/UTC") |> DateTime.add(30, :day) |> DateTime.truncate(:second)
   )
+
+### Ports
 
 {:ok, london} = PortRepo.create("London", "LOND")
 {:ok, london_shipyard} = ShipyardRepo.create(london)
@@ -43,3 +48,14 @@ alias Aos.Repo.{
 
 {:ok, _port_of_spain_to_london} =
   RouteRepo.create(port_of_spain, london, "Port of Spain -> London", 1)
+
+### Items
+{:ok, rum} =
+  ItemRepo.create(
+    "RUM",
+    "Rum",
+    "A popular alcoholic beverage distilled from sugarcane byproducts like molasses. It comes in various types, including white, golden, dark, and spiced."
+  )
+
+{:ok, london_trader} = TraderRepo.create("london trader", london)
+{:ok, _london_rum_plan} = TraderPlanRepo.create(london_trader, rum, 200, 400)

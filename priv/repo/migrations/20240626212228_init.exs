@@ -44,6 +44,8 @@ defmodule Aos.Repo.Migrations.Init do
       timestamps()
     end
 
+    create unique_index(:item, :shortcode)
+
     create table(:port) do
       add :shortcode, :text, null: false
       add :name, :text, null: false
@@ -83,6 +85,41 @@ defmodule Aos.Repo.Migrations.Init do
       timestamps()
     end
 
+    create table(:trader_plan) do
+      add :trader_id, references(:trader), null: false
+      add :item_id, references(:item), null: false
+      add :peak, :integer, null: false, comment: "maximum production at the peak of the curve"
+      add :max, :integer, null: false, comment: "maximum production for this item at this trader"
+      add :fluctuation, :float, null: false, comment: "random fluctuation to model volatility"
+      add :mean, :float, null: false, comment: "mean for the gaussian distribution"
+      add :std_dev, :float, null: false, comment: "standard deviation for gaussian distribution"
+
+      add :sensitivity, :float,
+        null: false,
+        comment: "sensitivity of price to stock level changes"
+    end
+
+    create constraint(:trader_plan, :peak_must_be_greater_than_zero, check: "peak > 0")
+    create constraint(:trader_plan, :max_must_be_greater_than_zero, check: "max > 0")
+
+    create constraint(:trader_plan, :sensitivity_must_be_greater_than_zero,
+             check: "sensitivity > 0"
+           )
+
+    create constraint(:trader_plan, :mean_inside_bounds, check: "mean >= 0.0 and mean <= 1.0")
+
+    create constraint(:trader_plan, :std_dev_inside_bounds,
+             check: "std_dev >= 0.0 and std_dev <= 1.0"
+           )
+
+    create constraint(:trader_plan, :fluctuation_inside_bounds,
+             check: "fluctuation >= 0.0 and fluctuation <= 1.0"
+           )
+
+    create unique_index(:trader_plan, [:trader_id, :item_id],
+             comment: "there can only be a single plan per item per trader"
+           )
+
     create table(:trader_inventory) do
       add :trader_id, references(:trader), null: false
       add :item_id, references(:item), null: false
@@ -90,6 +127,10 @@ defmodule Aos.Repo.Migrations.Init do
       add :cost, :integer, null: false
       timestamps()
     end
+
+    create unique_index(:trader_inventory, [:trader_id, :item_id],
+             comment: "traders stock only one instance of each item"
+           )
 
     create table(:orderbook) do
       add :port_id, references(:port), null: false
