@@ -9,6 +9,7 @@ defmodule AosWeb.CompanyAgentController do
       |> render(:hire, agent: agent)
     else
       {:error, :company_not_owned_by_player} -> {:error, :forbidden}
+      e -> e
     end
   end
 end

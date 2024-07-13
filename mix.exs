@@ -51,7 +51,8 @@ defmodule Aos.MixProject do
       {:random_password, "~> 1.2", only: :test},
       {:mimic, "~> 1.8", only: :test},
       {:faker, "~> 0.18.0", only: :test},
-      {:credo, "~> 1.7", only: :dev}
+      {:credo, "~> 1.7", only: :dev},
+      {:beam_file, "~> 0.6.2", only: :dev}
     ]
   end
 

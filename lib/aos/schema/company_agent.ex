@@ -12,6 +12,9 @@ defmodule Aos.Schema.CompanyAgent do
     |> cast(attrs, [])
     |> put_assoc(:port, attrs.port)
     |> put_assoc(:company, attrs.company)
+    |> unique_constraint([:company_id, :port_id],
+      message: "company already has an agent in this port"
+    )
     |> validate_required([:port, :company])
     |> unique_constraint([:port, :company])
   end

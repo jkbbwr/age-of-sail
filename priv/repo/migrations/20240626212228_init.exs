@@ -116,14 +116,19 @@ defmodule Aos.Repo.Migrations.Init do
     create table(:warehouse) do
       add :port_id, references(:port), null: false
       add :capacity, :integer, null: false
+      add :company_id, references(:company), null: false
       timestamps()
     end
 
-    create table(:warehouse_entry) do
+    create table(:warehouse_inventory) do
       add :item_id, references(:item), null: false
       add :quantity, :integer, null: false
       add :warehouse_id, references(:warehouse), null: false
       timestamps()
+    end
+
+    create table(:ship_inventory) do
+      add :ship_id, references(:ship)
     end
 
     create table(:company_agent) do
@@ -134,6 +139,10 @@ defmodule Aos.Repo.Migrations.Init do
 
     create unique_index(:company_agent, [:company_id, :port_id],
              comment: "companies can only have one agent in each port"
+           )
+
+    create unique_index(:warehouse, [:company_id, :port_id],
+             comment: "companies can only have one warehouse in each port"
            )
   end
 end

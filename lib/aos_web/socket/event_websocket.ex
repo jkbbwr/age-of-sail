@@ -15,6 +15,7 @@ defmodule AosWeb.EventWebsocket do
     Logger.debug("Unhandled in. #{inspect(message)}")
   end
 
+  @impl true
   def handle_info(payload, state) do
     {:push, {:text, Jason.encode!(payload)}, state}
   end

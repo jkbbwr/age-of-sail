@@ -17,7 +17,9 @@ defmodule Aos.Application do
       # Start a worker by calling: Aos.Worker.start_link(arg)
       # {Aos.Worker, arg},
       # Start to serve requests, typically the last entry
-      AosWeb.Endpoint
+      AosWeb.Endpoint,
+      # The in game clock
+      {Aos.Agent.GameTick, name: Aos.GameTick}
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html
