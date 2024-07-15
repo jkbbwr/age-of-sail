@@ -1,23 +1,26 @@
-defmodule Aos.Repo.TraderInventoryRepo do
+defmodule Aos.Repo.TraderPlanRepo do
   use Aos, :repository
-  alias Aos.Schema.TraderInventory
+  alias Aos.Schema.TraderPlan
 
-  def create(trader, item, quantity, cost) do
-    %TraderInventory{}
-    |> TraderInventory.create(%{trader: trader, item: item, quantity: quantity, cost: cost})
+  def create(
+        trader,
+        item,
+        desired_stock,
+        price_elasticity,
+        price_volatility,
+        replenishment_rate,
+        stock_volatility
+      ) do
+    %TraderPlan{}
+    |> TraderPlan.create(%{
+      trader: trader,
+      item: item,
+      desired_stock: desired_stock,
+      price_elasticity: price_elasticity,
+      price_volatility: price_volatility,
+      replenishment_rate: replenishment_rate,
+      stock_volatility: stock_volatility
+    })
     |> Repo.insert()
-  end
-
-  def find_by_trader_id_and_item_id(trader_id, item_id) do
-    query =
-      from inventory in TraderInventory,
-        where: inventory.trader_id == ^trader_id and inventory.item_id == ^item_id,
-        preload: [:item, :trader],
-        select: inventory
-
-    case Repo.one(query) do
-      nil -> {:error, :not_found}
-      inventory -> {:ok, inventory}
-    end
   end
 end

@@ -4,26 +4,33 @@ defmodule Aos.Schema.TraderPlan do
   schema "trader_plan" do
     belongs_to :trader, Aos.Schema.Trader
     belongs_to :item, Aos.Schema.Item
-    field :peak, :integer
-    field :max, :integer
-    field :fluctuation, :float
-    field :mean, :float
-    field :std_dev, :float
-    field :sensitivity, :float
+
+    field :desired_stock, :integer
+    field :price_elasticity, :float
+    field :price_volatility, :float
+
+    field :replenishment_rate, :integer
+    field :stock_volatility, :float
     timestamps()
   end
 
   def create(trader_plan, attrs) do
     trader_plan
-    |> cast(attrs, [:peak, :max, :fluctuation, :mean, :std_dev, :sensitivity])
+    |> cast(attrs, [
+      :desired_stock,
+      :price_elasticity,
+      :price_volatility,
+      :replenishment_rate,
+      :stock_volatility
+    ])
     |> put_assoc(:trader, attrs.trader)
     |> put_assoc(:item, attrs.item)
-    |> validate_required([:peak, :max, :fluctuation, :mean, :std_dev, :sensitivity])
-    |> validate_number(:peak, greater_than: 0)
-    |> validate_number(:max, greater_than: 0)
-    |> validate_number(:sensitivity, greater_than: 0)
-    |> validate_number(:mean, greater_than: 0.0, less_than: 1.0)
-    |> validate_number(:std_dev, greater_than: 0.0, less_than: 1.0)
-    |> validate_number(:fluctuation, greater_than: 0.0, less_than: 1.0)
+    |> validate_required([
+      :desired_stock,
+      :price_elasticity,
+      :price_volatility,
+      :replenishment_rate,
+      :stock_volatility
+    ])
   end
 end

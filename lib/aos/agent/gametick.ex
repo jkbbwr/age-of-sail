@@ -1,6 +1,7 @@
 defmodule Aos.Agent.GameTick do
   require Logger
-  use Aos.Agent
+  use GenServer
+  alias Phoenix.PubSub
 
   @tickrate 90000
 
@@ -31,14 +32,12 @@ defmodule Aos.Agent.GameTick do
 
   @impl true
   def handle_info(:tick, state) do
-    spawn_link(fn ->
-      timestamp = Aos.Time.current_gametime()
-      PubSub.broadcast!(Aos.PubSub, "tick", {:tick, timestamp})
+    timestamp = Aos.Time.current_gametime()
+    PubSub.broadcast!(Aos.PubSub, "tick", {:tick, timestamp})
 
-      Logger.debug(
-        "Emitting game tick #{timestamp}. It is #{Aos.Time.gametime_to_datetime(timestamp)} in game. And #{DateTime.now!("Etc/UTC") |> DateTime.truncate(:second)} in the real world."
-      )
-    end)
+    Logger.debug(
+      "Emitting game tick #{timestamp}. It is #{Aos.Time.gametime_to_datetime(timestamp)} in game. And #{DateTime.now!("Etc/UTC") |> DateTime.truncate(:second)} in the real world."
+    )
 
     Process.send_after(self(), :tick, @tickrate)
     {:noreply, state}

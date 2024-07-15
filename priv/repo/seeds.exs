@@ -18,7 +18,10 @@ alias Aos.Repo.{
   ShipRepo,
   AuthTokenRepo,
   CompanyRepo,
-  ItemRepo
+  ItemRepo,
+  TraderInventoryRepo,
+  TraderPlanRepo,
+  TraderRepo
 }
 
 ### Players
@@ -58,4 +61,5 @@ alias Aos.Repo.{
   )
 
 {:ok, london_trader} = TraderRepo.create("london trader", london)
-{:ok, _london_rum_plan} = TraderPlanRepo.create(london_trader, rum, 200, 400)
+{:ok, _london_rum_plan} = TraderPlanRepo.create(london_trader, rum, 1000, 0.25, 0.3, 10, 0.3)
+{:ok, _london_rum_stock} = TraderInventoryRepo.create(london_trader, rum, 1, 100)

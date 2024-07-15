@@ -4,28 +4,32 @@ defmodule Aos.Application do
   @moduledoc false
 
   use Application
+  require Logger
 
   @impl true
   def start(_type, _args) do
-    children = [
-      AosWeb.Telemetry,
-      Aos.Repo,
-      {DNSCluster, query: Application.get_env(:aos, :dns_cluster_query) || :ignore},
-      {Phoenix.PubSub, name: Aos.PubSub},
-      # Start the Finch HTTP client for sending emails
-      {Finch, name: Aos.Finch},
-      # Start a worker by calling: Aos.Worker.start_link(arg)
-      # {Aos.Worker, arg},
-      # Start to serve requests, typically the last entry
-      AosWeb.Endpoint,
-      # The in game clock
-      {Aos.Agent.GameTick, name: Aos.GameTick}
-    ]
+    children =
+      [
+        AosWeb.Telemetry,
+        Aos.Repo,
+        {DNSCluster, query: Application.get_env(:aos, :dns_cluster_query) || :ignore},
+        {Phoenix.PubSub, name: Aos.PubSub},
+        {Finch, name: Aos.Finch},
+        AosWeb.Endpoint,
+        Aos.TraderSupervisor
+      ]
+      |> gametick()
 
-    # See https://hexdocs.pm/elixir/Supervisor.html
-    # for other strategies and supported options
     opts = [strategy: :one_for_one, name: Aos.Supervisor]
     Supervisor.start_link(children, opts)
+  end
+
+  defp gametick(children) do
+    if Application.fetch_env!(:aos, :enable_gametick) do
+      children ++ [{Aos.Agent.GameTick, name: Aos.GameTick}]
+    else
+      children
+    end
   end
 
   # Tell Phoenix to update the endpoint configuration

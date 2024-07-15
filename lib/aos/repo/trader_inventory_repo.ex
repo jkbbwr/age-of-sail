@@ -1,30 +1,32 @@
 defmodule Aos.Repo.TraderInventoryRepo do
   use Aos, :repository
-  alias Aos.Schema.TraderPlan
+  alias Aos.Schema.TraderInventory
 
-  def create(
-        trader,
-        item,
-        peak,
-        max,
-        fluctuation \\ 0.05,
-        mean \\ 0.5,
-        std_dev \\ 0.1,
-        sensitivity \\ 0.5
-      )
-
-  def create(trader, item, peak, max, fluctuation, mean, std_dev, sensitivity) do
-    %TraderPlan{}
-    |> TraderPlan.create(%{
-      trader: trader,
-      item: item,
-      peak: peak,
-      max: max,
-      fluctuation: fluctuation,
-      mean: mean,
-      std_dev: std_dev,
-      sensitivity: sensitivity
-    })
+  def create(trader, item, stock, cost) do
+    %TraderInventory{}
+    |> TraderInventory.create(%{trader: trader, item: item, stock: stock, cost: cost})
     |> Repo.insert()
+  end
+
+  def find_by_trader_id_and_item_id(trader_id, item_id) do
+    query =
+      from inventory in TraderInventory,
+        where: inventory.trader_id == ^trader_id and inventory.item_id == ^item_id,
+        preload: [:item, :trader],
+        select: inventory
+
+    case Repo.one(query) do
+      nil -> {:error, :not_found}
+      inventory -> {:ok, inventory}
+    end
+  end
+
+  def update_cost_and_stock(inventory, cost, stock) do
+    inventory
+    |> TraderInventory.update(%{
+      cost: cost,
+      stock: stock
+    })
+    |> Repo.update()
   end
 end

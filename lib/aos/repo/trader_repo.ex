@@ -8,10 +8,11 @@ defmodule Aos.Repo.TraderRepo do
     |> Repo.insert()
   end
 
+  def all() do
+    Repo.all(Trader)
+  end
+
   def find_by_id(id, preloads \\ []) do
-    case(Repo.get(Trader, id) |> Repo.preload(preloads)) do
-      nil -> {:error, :not_found}
-      trader -> {:ok, trader}
-    end
+    wrap_not_found(Repo.get(Trader, id) |> Repo.preload(preloads))
   end
 end

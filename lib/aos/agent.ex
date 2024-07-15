@@ -6,14 +6,16 @@ defmodule Aos.Agent do
     quote do
       alias Phoenix.PubSub
       use GenServer
+      require Logger
       @behaviour Aos.Agent
+
+      def start_link(state, opts \\ []) do
+        GenServer.start_link(__MODULE__, state, opts)
+      end
 
       @impl true
       def init(state) do
-        if function_exported?(__MODULE__, :tick, 1) do
-          PubSub.subscribe(Aos.PubSub, "tick")
-        end
-
+        PubSub.subscribe(Aos.PubSub, "tick")
         Enum.each(topics(), fn topic -> PubSub.subscribe(Aos.PubSub, topic) end)
 
         {:ok, state}

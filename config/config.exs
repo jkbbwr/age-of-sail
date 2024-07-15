@@ -8,6 +8,7 @@
 import Config
 
 config :aos,
+  enable_gametick: true,
   ecto_repos: [Aos.Repo],
   generators: [timestamp_type: :utc_datetime, binary_id: true]
 
@@ -15,7 +16,8 @@ config :aos, Aos.Repo,
   migration_primary_key: [type: :uuid],
   migration_timestamps: [
     type: :timestamptz
-  ]
+  ],
+  log: false
 
 # Configures the endpoint
 config :aos, AosWeb.Endpoint,
