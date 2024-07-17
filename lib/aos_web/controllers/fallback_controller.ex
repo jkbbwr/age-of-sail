@@ -8,7 +8,7 @@ defmodule AosWeb.FallbackController do
 
   def call(conn, {:error, %Ecto.Changeset{} = changeset}) do
     conn
-    |> put_status(:unprocessable_entity)
+    |> put_status(:bad_request)
     |> put_view(AosWeb.ErrorJSON)
     |> render(:error, changeset: changeset)
   end

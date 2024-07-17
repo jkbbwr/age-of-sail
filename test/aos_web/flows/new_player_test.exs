@@ -3,7 +3,7 @@ defmodule AosWeb.NewPlayerTest do
   import AosWeb.Factory
   alias Aos.Repo.PortRepo
 
-  describe "new player flow" do
+  describe "new player" do
     test "joins game" do
       conn =
         post(build_conn(), ~p"/api/player/register", %{
@@ -63,7 +63,7 @@ defmodule AosWeb.NewPlayerTest do
       assert json_response(conn, 200)
     end
 
-    test "player lists stock at specific shipyard" do
+    test "lists stock at specific shipyard" do
       player = insert!(:player)
       auth = insert!(:auth_token, player: player)
       company = insert!(:company, player: player)
@@ -77,7 +77,7 @@ defmodule AosWeb.NewPlayerTest do
       assert %{"ships" => [%{"ship" => %{"name" => "Demo Ship 1"}}]} = response["data"]
     end
 
-    test "player decides to buy the ship at the shipyard" do
+    test "decides to buy the ship at the shipyard" do
       player = insert!(:player)
       auth = insert!(:auth_token, player: player)
       company = insert!(:company, player: player)

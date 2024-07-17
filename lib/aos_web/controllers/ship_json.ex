@@ -15,8 +15,7 @@ defmodule AosWeb.ShipJSON do
       name: ship.name,
       type: ship.type,
       cargo_space: ship.cargo_space,
-      speed: ship.speed,
-      arriving_at: ship.arriving_at
+      speed: ship.speed
     }
     |> map_assoc_if_loaded(ship.port, :port, &PortJSON.port/1)
     |> map_assoc_if_loaded(ship.company, :company, &CompanyJSON.company/1)

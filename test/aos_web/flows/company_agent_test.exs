@@ -30,7 +30,7 @@ defmodule AosWeb.CompanyAgentTest do
         authenticated_json_conn(auth.token)
         |> post(~p"/api/agent/hire", %{port_id: london.id, company_id: company.id})
 
-      assert json_response(conn, 422) == %{
+      assert json_response(conn, 400) == %{
                "errors" => %{"company_id" => ["company already has an agent in this port"]}
              }
     end

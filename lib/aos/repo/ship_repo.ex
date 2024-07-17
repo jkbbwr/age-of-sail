@@ -2,7 +2,7 @@ defmodule Aos.Repo.ShipRepo do
   use Aos, :repository
   alias Aos.Schema.Ship
 
-  def create(name, type, cargo_space, speed, state, arriving_at, port, company) do
+  def create(name, type, cargo_space, speed, state, port, company) do
     %Ship{}
     |> Ship.create_changeset(%{
       name: name,
@@ -11,8 +11,7 @@ defmodule Aos.Repo.ShipRepo do
       speed: speed,
       port: port,
       company: company,
-      state: state,
-      arriving_at: arriving_at
+      state: state
     })
     |> Repo.insert()
   end

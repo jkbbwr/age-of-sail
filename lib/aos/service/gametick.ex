@@ -1,4 +1,4 @@
-defmodule Aos.Agent.GameTick do
+defmodule Aos.Service.GameTick do
   require Logger
   use GenServer
   alias Phoenix.PubSub

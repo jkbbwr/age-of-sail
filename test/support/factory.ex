@@ -40,8 +40,7 @@ defmodule AosWeb.Factory do
       port: build(:london),
       state: :at_port,
       speed: 8,
-      company: nil,
-      arriving_at: nil
+      company: nil
     }
   end
 

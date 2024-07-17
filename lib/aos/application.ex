@@ -26,7 +26,7 @@ defmodule Aos.Application do
 
   defp gametick(children) do
     if Application.fetch_env!(:aos, :enable_gametick) do
-      children ++ [{Aos.Agent.GameTick, name: Aos.GameTick}]
+      children ++ [{Aos.Service.GameTick, name: Aos.GameTick}]
     else
       children
     end

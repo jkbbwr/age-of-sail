@@ -18,16 +18,18 @@ alias Aos.Repo.{
   ShipRepo,
   AuthTokenRepo,
   CompanyRepo,
+  CompanyAgentRepo,
   ItemRepo,
   TraderInventoryRepo,
   TraderPlanRepo,
-  TraderRepo
+  TraderRepo,
+  WarehouseRepo
 }
 
 ### Players
 
 {:ok, player} = PlayerRepo.create(%{name: "demo", email: "demo@demo.com", password: "password"})
-# {:ok, _company} = CompanyRepo.create("test", "test company", 9999, player)
+{:ok, company} = CompanyRepo.create("test", "test company", 9999, player)
 
 {:ok, _auth} =
   AuthTokenRepo.create(
@@ -39,9 +41,10 @@ alias Aos.Repo.{
 ### Ports
 
 {:ok, london} = PortRepo.create("London", "LOND")
+{:ok, _agent} = CompanyAgentRepo.create(company, london)
 {:ok, london_shipyard} = ShipyardRepo.create(london)
 
-{:ok, demo_ship} = ShipRepo.create("Demo Ship 1", :sloop, 100, 100, :at_port, nil, london, nil)
+{:ok, demo_ship} = ShipRepo.create("Demo Ship 1", :sloop, 100, 100, :at_port, london, nil)
 {:ok, _shipyard_stock} = ShipyardRepo.create_stock(100, demo_ship, london_shipyard)
 
 {:ok, port_of_spain} = PortRepo.create("Port of Spain", "PTOS")
@@ -61,5 +64,7 @@ alias Aos.Repo.{
   )
 
 {:ok, london_trader} = TraderRepo.create("london trader", london)
+{:ok, _london_warehouse} = WarehouseRepo.create(london, company, 1)
+
 {:ok, _london_rum_plan} = TraderPlanRepo.create(london_trader, rum, 1000, 0.25, 0.3, 10, 0.3)
 {:ok, _london_rum_stock} = TraderInventoryRepo.create(london_trader, rum, 1, 100)

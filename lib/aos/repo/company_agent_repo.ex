@@ -16,10 +16,6 @@ defmodule Aos.Repo.CompanyAgentRepo do
 
   def find_by_id(id, opts \\ []) do
     preload = Keyword.get(opts, :preload, [])
-
-    case Repo.get(CompanyAgent, id) |> Repo.preload(preload) do
-      nil -> {:error, :not_found}
-      agent -> {:ok, agent}
-    end
+    wrap_not_found(Repo.get(CompanyAgent, id) |> Repo.preload(preload))
   end
 end

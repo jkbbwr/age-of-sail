@@ -63,7 +63,6 @@ defmodule Aos.Repo.Migrations.Init do
       add :speed, :integer, null: false
       add :company_id, references(:company)
       add :port_id, references(:port)
-      add :arriving_at, :timestamptz
       timestamps()
     end
 
@@ -77,6 +76,12 @@ defmodule Aos.Repo.Migrations.Init do
 
       add :description, :text, null: false
       timestamps()
+    end
+
+    create table(:transit) do
+      add :ship_id, references(:ship)
+      add :route_id, references(:route)
+      add :step, :integer
     end
 
     create table(:trader) do

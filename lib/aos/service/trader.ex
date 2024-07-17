@@ -1,4 +1,4 @@
-defmodule Aos.Agent.Trader do
+defmodule Aos.Service.Trader do
   use Aos.Agent
   alias Aos.Repo
   alias Aos.Repo.TraderRepo

@@ -28,6 +28,9 @@ defmodule AosWeb.Router do
     get "/shipyard/:shipyard_id", ShipyardController, :get
     post "/shipyard/:shipyard_id/buy", ShipyardController, :buy
 
+    post "/warehouse/buy", WarehouseController, :buy
+    post "/warehouse/modify", WarehouseController, :modify
+
     post "/company/register", CompanyController, :register
 
     post "/agent/hire", CompanyAgentController, :hire

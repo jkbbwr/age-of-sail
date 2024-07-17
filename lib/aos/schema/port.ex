@@ -12,6 +12,7 @@ defmodule Aos.Schema.Port do
     has_many :ships, Aos.Schema.Ship
     has_one :shipyard, Aos.Schema.Shipyard
     has_many :agents, Aos.Schema.CompanyAgent
+    has_many :warehouses, Aos.Schema.Warehouse
 
     timestamps()
   end

@@ -26,7 +26,7 @@ defmodule AosWeb.PlayerControllerTest do
           password: "password"
         })
 
-      assert json_response(conn, 422) == %{"errors" => %{"email" => ["has already been taken"]}}
+      assert json_response(conn, 400) == %{"errors" => %{"email" => ["has already been taken"]}}
     end
 
     test "password not strong enough" do
@@ -37,7 +37,7 @@ defmodule AosWeb.PlayerControllerTest do
           password: "123"
         })
 
-      assert json_response(conn, 422) == %{
+      assert json_response(conn, 400) == %{
                "errors" => %{"password" => ["should be at least 8 character(s)"]}
              }
     end

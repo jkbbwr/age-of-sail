@@ -9,7 +9,6 @@ defmodule Aos.Schema.Ship do
     field :speed, :integer
     belongs_to :port, Aos.Schema.Port
     belongs_to :company, Aos.Schema.Company
-    field :arriving_at, :utc_datetime
     timestamps()
   end
 
@@ -29,7 +28,7 @@ defmodule Aos.Schema.Ship do
 
   def create_changeset(ship, attrs \\ %{}) do
     ship
-    |> cast(attrs, [:name, :type, :cargo_space, :state, :arriving_at, :speed])
+    |> cast(attrs, [:name, :type, :cargo_space, :state, :speed])
     |> put_assoc(:company, attrs.company)
     |> put_assoc(:port, attrs.port)
     |> validate_required([:name, :type, :cargo_space, :state, :port, :speed])

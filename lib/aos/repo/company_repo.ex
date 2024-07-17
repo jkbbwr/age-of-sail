@@ -29,10 +29,7 @@ defmodule Aos.Repo.CompanyRepo do
   end
 
   def find_company_by_player_id(player_id) do
-    case(Repo.get_by(Company, player_id: player_id)) do
-      nil -> {:error, :not_found}
-      company -> {:ok, company}
-    end
+    wrap_not_found(Repo.get_by(Company, player_id: player_id))
   end
 
   def find_by_id(id, opts \\ []) do

@@ -9,10 +9,10 @@ defmodule Aos.Time do
     @epoch |> DateTime.add(gametime * @scale, :second)
   end
 
-  def current_gametime() do
+  def current_gametime(from \\ @start) do
     DateTime.now!("Etc/UTC")
     |> DateTime.truncate(:second)
-    |> DateTime.diff(@start)
+    |> DateTime.diff(from)
   end
 
   def next_interval() do
