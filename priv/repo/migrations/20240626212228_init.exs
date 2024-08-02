@@ -59,8 +59,8 @@ defmodule Aos.Repo.Migrations.Init do
       add :name, :text, null: false
       add :type, :text, null: false
       add :cargo_space, :integer, null: false
-      add :state, :text, null: false
       add :speed, :integer, null: false
+      add :state, :text, null: false
       add :company_id, references(:company)
       add :port_id, references(:port)
       timestamps()
@@ -78,12 +78,6 @@ defmodule Aos.Repo.Migrations.Init do
       timestamps()
     end
 
-    create table(:transit) do
-      add :ship_id, references(:ship)
-      add :route_id, references(:route)
-      add :step, :integer
-    end
-
     create table(:trader) do
       add :port_id, references(:port), null: false
       add :name, :text, null: false
@@ -93,6 +87,7 @@ defmodule Aos.Repo.Migrations.Init do
     create table(:trader_plan) do
       add :trader_id, references(:trader), null: false
       add :item_id, references(:item), null: false
+      add :desire, :string, null: false
 
       add :desired_stock, :integer,
         null: false,
@@ -126,6 +121,7 @@ defmodule Aos.Repo.Migrations.Init do
       add :item_id, references(:item), null: false
       add :stock, :integer, null: false
       add :cost, :integer, null: false
+      add :desire, :string, null: false
       timestamps()
     end
 

@@ -5,6 +5,8 @@ defmodule Aos.Schema.TraderPlan do
     belongs_to :trader, Aos.Schema.Trader
     belongs_to :item, Aos.Schema.Item
 
+    field :desire, Ecto.Enum, values: [:buy, :sell], default: :sell
+
     field :desired_stock, :integer
     field :price_elasticity, :float
     field :price_volatility, :float

@@ -17,7 +17,7 @@ defmodule Aos.Service.BuyWarehouseCapacity do
   end
 
   def authorize(:call, %{id: player_id}, %{company: company}) when company.player_id != player_id,
-    do: {:error, "agent id belongs to a company the player doesn't own"}
+    do: {:error, Aos.Error.AgentNotEmployedByCompany.new(%{})}
 
   def authorize(:call, _, _), do: true
 

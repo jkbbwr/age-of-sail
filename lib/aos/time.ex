@@ -9,6 +9,10 @@ defmodule Aos.Time do
     @epoch |> DateTime.add(gametime * @scale, :second)
   end
 
+  def current_game_datetime() do
+    Aos.Time.current_gametime() |> Aos.Time.gametime_to_datetime()
+  end
+
   def current_gametime(from \\ @start) do
     DateTime.now!("Etc/UTC")
     |> DateTime.truncate(:second)

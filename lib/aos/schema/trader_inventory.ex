@@ -6,6 +6,7 @@ defmodule Aos.Schema.TraderInventory do
     belongs_to :item, Aos.Schema.Item
     field :stock, :integer
     field :cost, :integer
+    field :desire, Ecto.Enum, values: [:buy, :sell], default: :sell
     timestamps()
   end
 

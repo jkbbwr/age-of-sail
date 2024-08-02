@@ -21,4 +21,12 @@ defmodule Aos.Repo.ShipRepo do
     |> Ship.update_company_changeset(%{company: company})
     |> Repo.update()
   end
+
+  def find_by_id(id, opts \\ []) do
+    preload = Keyword.get(opts, :preload, [])
+    wrap_not_found(Repo.get(CompanyAgent, id) |> Repo.preload(preload))
+  end
+
+  def transit(ship, port) do
+  end
 end

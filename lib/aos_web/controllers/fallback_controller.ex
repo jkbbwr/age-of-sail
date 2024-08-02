@@ -13,6 +13,14 @@ defmodule AosWeb.FallbackController do
     |> render(:error, changeset: changeset)
   end
 
+  def call(conn, {:error, %{message: message, context: context, status: status} = error})
+      when is_exception(error) do
+    conn
+    |> put_status(status)
+    |> put_view(AosWeb.ErrorJSON)
+    |> render(:error, message: message, context: context)
+  end
+
   def call(conn, {:error, :unauthorized}) do
     conn
     |> put_status(:unauthorized)

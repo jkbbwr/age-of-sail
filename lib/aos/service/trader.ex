@@ -1,4 +1,11 @@
 defmodule Aos.Service.Trader do
+  @doc """
+    This GenServer is responsible for a few things around traders.
+
+    1) Deciding on sell pricing
+    2) Deciding how much stock should be produced in a given day.
+    3) Deciding on buy pricing (TODO)
+  """
   use Aos.Agent
   alias Aos.Repo
   alias Aos.Repo.TraderRepo

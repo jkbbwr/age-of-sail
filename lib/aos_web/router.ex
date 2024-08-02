@@ -29,7 +29,7 @@ defmodule AosWeb.Router do
     post "/shipyard/:shipyard_id/buy", ShipyardController, :buy
 
     post "/warehouse/buy", WarehouseController, :buy
-    post "/warehouse/modify", WarehouseController, :modify
+    post "/warehouse/capacity", WarehouseController, :modify
 
     post "/company/register", CompanyController, :register
 

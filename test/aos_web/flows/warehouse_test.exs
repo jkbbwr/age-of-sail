@@ -39,5 +39,19 @@ defmodule AosWeb.WarehouseTest do
 
       assert response = json_response(conn, 400)
     end
+
+    test "can't be bought by another player using their agent" do
+      player = insert!(:player)
+      player2 = insert!(:player)
+      company = insert!(:company, player: player)
+      auth = insert!(:auth_token, player: player2)
+      agent = insert!(:company_agent, company: company)
+
+      conn =
+        authenticated_json_conn(auth.token)
+        |> post(~p"/api/warehouse/buy", %{agent_id: agent.id, capacity: 100})
+
+      assert %{} == json_response(conn, 400)
+    end
   end
 end

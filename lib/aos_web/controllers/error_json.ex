@@ -11,6 +11,15 @@ defmodule AosWeb.ErrorJSON do
     %{errors: Ecto.Changeset.traverse_errors(changeset, &translate_error/1)}
   end
 
+  def error(%{message: message, context: context}) do
+    %{
+      error: %{
+        message: message,
+        context: context
+      }
+    }
+  end
+
   def invalid_password(_attrs) do
     %{message: "invalid password"}
   end
